@@ -1,0 +1,18 @@
+<!-- templates/index.html -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>画像アップロード</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <h1>画像アップロード</h1>
+    {% if msg %}<p style="color:green">{{ msg }}</p>{% endif %}
+    <form action="/upload" method="post" enctype="multipart/form-data">
+        <label>画像1: <input type="file" name="file1" accept="image/*" required></label><br>
+        <label>画像2: <input type="file" name="file2" accept="image/*" required></label><br>
+        <button type="submit">送信</button>
+    </form>
+</body>
+</html>
