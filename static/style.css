@@ -3,20 +3,33 @@ body {
     font-family: sans-serif;
     background: #f7f7f7;
     margin: 2em;
+    text-align: center; /* 画面中央寄せ */
 }
 h1 {
     color: #333;
+    text-align: center; /* タイトル中央寄せ */
 }
 form {
     background: #fff;
     padding: 1em;
     border-radius: 8px;
     box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    max-width: 400px;
+    max-width: 500px; /* 入力欄を広く */
+    margin: 2em auto; /* フォーム中央寄せ */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 label {
     display: block;
     margin-bottom: 1em;
+    width: 90%;
+    text-align: left;
+}
+input[type="file"],
+input[type="range"] {
+    width: 100%;
+    box-sizing: border-box;
 }
 button {
     padding: 0.5em 1.5em;
@@ -25,6 +38,7 @@ button {
     border: none;
     border-radius: 4px;
     cursor: pointer;
+    margin-top: 1em;
 }
 button:hover {
     background: #005fa3;

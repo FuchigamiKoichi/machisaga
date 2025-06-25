@@ -5,14 +5,61 @@
     <meta charset="UTF-8">
     <title>画像アップロード</title>
     <link rel="stylesheet" href="/static/style.css">
+    <style>
+      body { text-align: center; }
+      form {
+        display: inline-block;
+        text-align: left;
+        width: 80vw;
+        max-width: 600px;
+        min-width: 300px;
+      }
+      .slider-value { margin-left: 1em; font-weight: bold; }
+      label { display: block; margin-bottom: 1em; width: 100%; }
+      .slider-label { font-weight: bold; margin-bottom: 0.2em; display: block; }
+      .slider-container { margin-bottom: 1.5em; }
+      input[type="file"], input[type="range"] {
+        width: 80%;
+        margin-top: 0.3em;
+      }
+      button { display: block; margin: 1em auto; }
+      h1, h2 { text-align: center; }
+      .warn { color: #d00; font-size: 0.95em; margin-bottom: 1em; }
+    </style>
 </head>
 <body>
     <h1>画像アップロード</h1>
+    <div class="warn">※ブレ補正が10%を超えると計算時間が10分以上となる場合があります。</div>
     {% if msg %}<p style="color:green">{{ msg }}</p>{% endif %}
     <form action="/upload" method="post" enctype="multipart/form-data">
-        <label>画像1: <input type="file" name="file1" accept="image/*" required></label><br>
-        <label>画像2: <input type="file" name="file2" accept="image/*" required></label><br>
+        <label>画像1: <input type="file" name="file1" accept="image/*" required></label>
+        <label>画像2: <input type="file" name="file2" accept="image/*" required></label>
+        <div class="slider-container">
+          <span class="slider-label">縦方向ブレ補正</span>
+          <input type="range" name="v" min="0" max="100" step="1" value="0" oninput="v_val.textContent=this.value">
+          <span class="slider-value" id="v_val">0</span>%
+        </div>
+        <div class="slider-container">
+          <span class="slider-label">横方向ブレ補正</span>
+          <input type="range" name="h" min="0" max="100" step="1" value="0" oninput="h_val.textContent=this.value">
+          <span class="slider-value" id="h_val">0</span>%
+        </div>
+        <div class="slider-container">
+          <span class="slider-label">感度</span>
+          <input type="range" name="t" min="0" max="255" step="1" value="128" oninput="t_val.textContent=this.value">
+          <span class="slider-value" id="t_val">128</span>
+        </div>
         <button type="submit">送信</button>
     </form>
+    {% if merged_img %}
+      <h2>合成画像</h2>
+      <img src="{{ merged_img }}" alt="結果" style="max-width:400px; border:1px solid #ccc;">
+    {% endif %}
+    <script>
+      // ページロード時に初期値を表示
+      v_val.textContent = document.querySelector('input[name="v"]').value;
+      h_val.textContent = document.querySelector('input[name="h"]').value;
+      t_val.textContent = document.querySelector('input[name="t"]').value;
+    </script>
 </body>
 </html>
